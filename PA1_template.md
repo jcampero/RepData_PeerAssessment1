@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output:
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 ## Introduction
 
@@ -37,7 +32,8 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 
 Using the following R code the data set is loaded into the variable *activity_data*:
 
-```{r loadingchunk, echo = TRUE}
+
+```r
 library(R.utils)
 # Read activity data from the local activity.zip file
 zip_file <- "activity.zip"
@@ -50,7 +46,8 @@ activity_data <- read.csv(unz(zip_file, csv_file), header=TRUE, sep=",")
 
 Once the data set is loaded, the following R code is used to obtain the total number of steps taken each day and generate it's corresponding historgram, along with the mean and median values:
 
-```{r histogram1chunk, echo = TRUE}
+
+```r
 total_steps <- aggregate(x = activity_data["steps"], FUN = sum, na.rm = TRUE,
                          by = list(date = activity_data$date))
 mean_steps <- mean(total_steps$steps, na.rm = TRUE)
@@ -60,12 +57,13 @@ hist(total_steps$steps, breaks = 10, freq = TRUE, col = "Blue",
      xlab = "Total steps taken per day")
 ```
 
+![](PA1_template_files/figure-html/histogram1chunk-1.png) 
+
 Notice that missing values are *"ignored"* using the **na.rm = TRUE** parameter in the sum,
 mean and median calculations, which actually is equivalent to having an imputation strategy
 of *"Set all NA's equal to zero"*.
 
-Using this approach, the mean number of steps taken per day is **`r format(mean_steps,
-nsmall = 2)`** and the median is **`r format(median_steps, nsmall = 2)`**.
+Using this approach, the mean number of steps taken per day is **9354.23** and the median is **10395**.
 
 
 ## What is the average daily activity pattern?
@@ -73,7 +71,8 @@ nsmall = 2)`** and the median is **`r format(median_steps, nsmall = 2)`**.
 To calculate the average daily activity pattern and generate it's corresponding time series
 plot, the following R code is used:
 
-```{r timeseries1chunk, echo = TRUE}
+
+```r
 average_steps <- aggregate(x = activity_data["steps"], FUN = mean, na.rm=TRUE,
                            by = list(interval = activity_data$interval))
 max_steps <- max(average_steps$steps)
@@ -84,12 +83,13 @@ plot(steps ~ rownames(average_steps), average_steps,
 axis(side = 1, at = seq.int(1, nrow(average_steps)+1, 12), labels = 0:24)
 ```
 
+![](PA1_template_files/figure-html/timeseries1chunk-1.png) 
+
 Notice that missing values are still being *"ignored"* using the **na.rm = TRUE** parameter
 in the aggregate function to compute the daily average/mean.
 
-From the time series plot above, it can be observed that **`r format(max_interval/100,
-digits = 2, nsmall = 2, decimal.mark = ":")`** is the 5-minute interval of the day with the
-maximum number of steps on average, with a value of **`r format(max_steps, nsmall = 2)`**
+From the time series plot above, it can be observed that **8:35** is the 5-minute interval of the day with the
+maximum number of steps on average, with a value of **206.1698**
 steps.
 
 
@@ -102,7 +102,8 @@ for that 5-minute interval. The R code to perform this imputation strategy and r
 the total number of steps taken each day, the mean and median values and generate an
 alternate un-biased historgram, is the following:
 
-```{r histogram2chunk, echo = TRUE}
+
+```r
 na_steps <- sum(is.na(activity_data$steps))
 na_percent <- na_steps / length(activity_data$steps) * 100
 activity_no_nas <- data.frame(cbind(activity_data, average_steps))
@@ -119,13 +120,15 @@ hist(total_steps2$steps, breaks = 10, freq = TRUE, col = "Blue",
      xlab = "Total steps taken per day")
 ```
 
+![](PA1_template_files/figure-html/histogram2chunk-1.png) 
+
 The total number of missing values in the steps column of the original activity dataset is
-**`r na_steps`**, which represents a **`r format(na_percent, digits =2, nsmall = 2)`%**
+**2304**, which represents a **13.11%**
 from the total observations.
 
 Using the strategy of mean imputation of the 5-minute interval to replace the missing
-values, the mean number of steps taken per day is **`r format(mean_steps2, nsmall = 2)`**
-and the median is **`r format(median_steps2, nsmall = 2)`**.
+values, the mean number of steps taken per day is **10766.19**
+and the median is **10766.19**.
 
 Comparing both histograms, it can be seen that using the mean imputation strategy
 eliminates the bias caused by the large number of missing values, initially treated as
@@ -141,7 +144,8 @@ Finally, to compare the differences in activity patterns between weekdays and we
 the following R code, that reclasifies and aggregates observations between weekdays and
 weekends, is used:
 
-```{r timeseries2chunk, echo = TRUE}
+
+```r
 activity_no_nas$day <- as.factor(ifelse(weekdays(as.Date(activity_no_nas$date))
                                         %in% c("Saturday","Sunday"), "Weekend", "Weekday"))
 week_average <- aggregate(x = activity_no_nas["steps"], FUN = mean,
@@ -155,6 +159,8 @@ xyplot(steps ~ as.integer((as.numeric(rownames(week_average))+1)/2) |
        type = "l", layout = c(1,2),
        scales = list(x = list(at = seq.int(1, nrow(average_steps)+1, 12), labels = 0:24)))
 ```
+
+![](PA1_template_files/figure-html/timeseries2chunk-1.png) 
 
 As it can be seen in the time series plots, the activity spike from 8:00 to 9:00, detected
 in the first time series plot, is produced during weekdays. Whereas weekends tend to have
