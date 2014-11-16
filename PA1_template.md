@@ -162,9 +162,9 @@ xyplot(steps ~ as.integer((as.numeric(rownames(week_average))+1)/2) |
 
 ![](PA1_template_files/figure-html/timeseries2chunk-1.png) 
 
-As it can be seen in the time series plots, the activity spike from 8:00 to 9:00, detected
-in the first time series plot, is produced during weekdays. Whereas weekends tend to have
-less volatility on average.
+As it can be seen, the notorious activity spike from 8:00 to 9:00, detected in the first
+time series plot, is produced during weekdays, whereas weekends tend to have less
+volatility on average.
 
 [1]: http://www.fitbit.com/                                 "Fitbit"
 [2]: http://www.nike.com/us/en_us/c/nikeplus-fuelband       "Nike Fuelband"
