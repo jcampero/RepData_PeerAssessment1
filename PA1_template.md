@@ -57,7 +57,7 @@ hist(total_steps$steps, breaks = 10, freq = TRUE, col = "Blue",
      xlab = "Total steps taken per day")
 ```
 
-![](PA1_template_files/figure-html/histogram1chunk-1.png) 
+![](PA1_template_files/figure-html/chunk2_histogram1-1.png) 
 
 Notice that missing values are *"ignored"* using the **na.rm = TRUE** parameter in the sum,
 mean and median calculations, which actually is equivalent to having an imputation strategy
@@ -83,7 +83,7 @@ plot(steps ~ rownames(average_steps), average_steps,
 axis(side = 1, at = seq.int(1, nrow(average_steps)+1, 12), labels = 0:24)
 ```
 
-![](PA1_template_files/figure-html/timeseries1chunk-1.png) 
+![](PA1_template_files/figure-html/chunk3_timeseries1-1.png) 
 
 Notice that missing values are still being *"ignored"* using the **na.rm = TRUE** parameter
 in the aggregate function to compute the daily average/mean.
@@ -120,7 +120,7 @@ hist(total_steps2$steps, breaks = 10, freq = TRUE, col = "Blue",
      xlab = "Total steps taken per day")
 ```
 
-![](PA1_template_files/figure-html/histogram2chunk-1.png) 
+![](PA1_template_files/figure-html/chunk4_histogram2-1.png) 
 
 The total number of missing values in the steps column of the original activity dataset is
 **2304**, which represents a **13.11%**
@@ -160,7 +160,7 @@ xyplot(steps ~ as.integer((as.numeric(rownames(week_average))+1)/2) |
        scales = list(x = list(at = seq.int(1, nrow(average_steps)+1, 12), labels = 0:24)))
 ```
 
-![](PA1_template_files/figure-html/timeseries2chunk-1.png) 
+![](PA1_template_files/figure-html/chunk5_timeseries2-1.png) 
 
 As it can be seen, the notorious activity spike from 8:00 to 9:00, detected in the first
 time series plot, is produced during weekdays, whereas weekends tend to have less
